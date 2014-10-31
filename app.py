@@ -1,5 +1,5 @@
 from flask import flash, Flask, g, redirect, render_template, request
-import db
+#import db
 
 app = Flask(__name__)
 
@@ -16,6 +16,9 @@ def user():
 def login():
     return render_template('login.html')
 
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 
 

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Welcome!</title>
+
+        <link rel="stylesheet"
+        href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<div id="style">
+{% block style %}
+<style>
+    .title{
+      color: #343434;
+      font-weight: normal;
+      font-family: 'Ultra', sans-sarif
+      font-size:34px;
+      line-height: 38px;
+      text-transform: uppercase;
+      text-shadow: 0 2px white, 0 3px #777
+    }
+    body {
+        background: #f1f1f1}
+    section {
+
+        border-radius: 10px;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px
+    }
+    .c {
+        background: #D3D3D3;
+        color: black;
+        }
+    .a   {
+     background: black;
+        color: white;
+        }
+
+</style>
+{% endblock style %}
+</div> <!--style-->
+
+
+</head>
+
+
+<form class="pure-form pure-form-aligned" method="POST" action="/results">
+<div id="opener" class="title">
+{% block body %}
+ <br><h1><center> <font face="Baskerville" size="10"> Greetings Weary Traveller </font></center></h1>
+<br>
+{% endblock body %}
+</div> <!--opener-->
+
+<center>
+<section class="c">
+<fieldset>
+<div class="pure-control-group"><br>
+  <label for="name">Username:</label>
+  <input id= "name" name = "name"type="text" placeholder="I do not know">
+</div>
+
+
+<div class="pure-control-group">
+  <label for="pword">Password:</label>
+  <input type="text" name = "pword" input id= "pword" size="20" placeholder="123456">
+</div>
+</section><br><font face ="Baskerville">
+<button type = "submit" class="pure-button pure-button-primary"
+  href="/user/*******"> Login</button>
+<button type = "submit" class="pure-button" href="/register"> Register</button>
+
+
+</fieldset>
+</center>
+</form>
+</body>
+</html>
