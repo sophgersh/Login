@@ -5,16 +5,19 @@ conn = Connection()
 db = conn["uncommon"]
 users = db.users
 
-#----- run this the first time ------#
-def setup():
-    print db.collection_names()
-    res = db.people.find({},{'_id':False})
-       
-    
-    users = db.users
-    
-    users.find_one()
-
+def new_user(udict):
+    pwcheck = (udict['pw'] == udict['rpw'])
+    uncheck = users.find({'uname':udict['uname']}) == 0
+    s = ""
+    if uncheck == False:
+        s = "The username has already been used"
+    elif pwcheck == False:
+        s =  "Passwords do not match"
+    else:
+        addperson(udict)
+    print s
+    return s
+        
 
 def addperson(pdict):
     db.users.insert(pdict)
@@ -23,7 +26,7 @@ def addfield(fname, field, data):
     p = users.find_one({"fname":fname})
     p[field] = data
     users.save(p)
-    #users.update({"fname":fname},{$set:{field:data}})
+    #users.update({"fname":fname},{'$set':{field:data}})
 
 #setup()
 

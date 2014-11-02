@@ -1,5 +1,6 @@
 from flask import flash, Flask, g, redirect, render_template, request
 from flask.ext.pymongo import PyMongo
+import mongo
 
 app = Flask(__name__)
 
@@ -8,10 +9,20 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/user')
+@app.route('/home', methods=['POST'])
 def user():
-    return render_template('user.html', d={'user':username})
-
+    newuser = {}
+    newuser['uname'] = request.form['uname']
+    newuser['fname'] = request.form['fname']
+    newuser['lname'] = request.form['lname']
+    newuser['pw'] = request.form['pw']
+    newuser['rpw'] = request.form['rpw']
+    valid_msg = mongo.new_user(newuser)
+    if valid_msg == '':
+        return render_template('home.html', d=newuser)
+    else:
+        #flash(valid_msg)
+        return redirect('/register')
 
 @app.route('/login')
 def login():
