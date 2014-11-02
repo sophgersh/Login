@@ -8,9 +8,10 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/user/<username>')
+@app.route('/user')
 def user():
     return render_template('user.html', d={'user':username})
+
 
 @app.route('/login')
 def login():
