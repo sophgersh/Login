@@ -1,5 +1,5 @@
 from flask import flash, Flask, g, redirect, render_template, request
-#import db
+from flask.ext.pymongo import PyMongo
 
 app = Flask(__name__)
 
