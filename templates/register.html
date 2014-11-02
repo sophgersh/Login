@@ -7,8 +7,12 @@
 <form action="/user" method="post" class="pure-form pure-form-aligned">
 <fieldset>
 <div class="pure-control-group">
-<label for="name">Name</label>
-  <input id="name" name="name" type="text" placeholder="Name"></div><br>
+<label for="fname">First Name</label>
+  <input id="fname" name="fname" type="text"
+  placeholder="First Name"></div><br>
+  <div class="pure-control-group">
+<label for="lname">Last Name</label>
+  <input id="lname" name="lname" type="text" placeholder="Last Name"></div><br>
 <div class="pure-control-group">
 <label for="username">Username</label>
   <input id="username" name="username" type="text" placeholder="Username"></div><br>
@@ -19,7 +23,7 @@
 <label for="rpw">Confirm Password</label>
   <input id="rpw" name="pw" type="text" placeholder="Confirm Password"></div><br>
 
-<button type="submit">Register!</button>
+<button type="submit" class="pure-button">Register!</button>
 <br><br><br>
 
 {% endblock %}
