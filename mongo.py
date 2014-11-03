@@ -23,10 +23,10 @@ def addperson(pdict):
     db.users.insert(pdict)
 
 def addfield(fname, field, data):
-    p = users.find_one({"fname":fname})
-    p[field] = data
-    users.save(p)
-    #users.update({"fname":fname},{'$set':{field:data}})
+    #p = users.find_one({"fname":fname})
+    #p[field] = data
+    #users.save(p)
+    users.update({"fname":fname},{'$set':{field:data}})
 
 #setup()
 
@@ -34,9 +34,9 @@ if __name__ == '__main__':
     #db = conn.test_database
     dict = {"fname":"Loras","lname":"Tyrell"}
     #people.insert(dict)
-    addfield("Adam","uname","daho")
+    addfield("Loras","uname","knightofflowers")
 
-    users.remove({"fname":{"$exists":False}})
+    #users.remove({"fname":{"$exists":False}})
     
     peeps = users.find({},{'_id':False}) 
     for p in peeps:
