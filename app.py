@@ -4,7 +4,7 @@ from flask import flash, Flask, g, redirect, render_template, request
 import mongo
 
 app = Flask(__name__)
-
+app.secret_key = 'a'
 
 @app.route('/')
 def index():
@@ -26,7 +26,7 @@ def user():
         if valid_msg == '':
             return render_template('home.html', d=newuser)
         else:
-            #flash(valid_msg)
+            flash(valid_msg)
             return redirect('/register')
 
 @app.route('/login')

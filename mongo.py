@@ -7,10 +7,11 @@ users = db.users
 
 def new_user(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
-    uncheck = users.find({'uname':udict['uname']}) == 0
+    un = udict['uname'] 
+    uncheck = users.find_one({'uname':un}) == None
     s = ""
     if uncheck == False:
-        s = "The username has already been used"
+        s = "That username has already been used"
     elif pwcheck == False:
         s =  "Passwords do not match"
     else:
