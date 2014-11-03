@@ -14,7 +14,9 @@ def index():
 def home():
     print "here"
     if 'username' in session:
-        return render_template('home.html',username = escape(session['username']))
+        username = escape(session['username'])
+        fname = mongo.getAttribute("fname", username)
+        return render_template('home.html',fname = fname ,username = username)
     return render_template('home.html')
 
 @app.route('/user', methods=['POST'])
@@ -38,6 +40,7 @@ def user():
 
 @app.route('/login')
 def login():
+    
     return render_template('login.html')
 
 @app.route('/logout')
@@ -46,8 +49,21 @@ def logout():
     return render_template('login.html')
 @app.route('/register')
 def register():
+    
     return render_template('register.html')
 
+@app.route('/verify', methods=['POST'])
+def verify():
+    if request.method=="POST":
+        uname = request.form['uname']
+        pw = request.form['pw']
+        valid_msg = mongo.check_pword(uname,pw)
+        if valid_msg == '':
+            session['username'] = uname
+            return redirect('/home')
+        else:
+            flash(valid_msg)
+            return redirect('/login')
 
 
 if __name__ == '__main__':

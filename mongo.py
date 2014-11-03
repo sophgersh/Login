@@ -18,17 +18,33 @@ def new_user(udict):
         addperson(udict)
     print s
     return s
-        
+
+def check_pword(uname,pw):
+    rpw = getAttribute("pw",uname)
+    if rpw == None:
+        return "Username does not exist"
+    if rpw == pw:
+        return ""
+    else:
+        return "Wrong password"
 
 def addperson(pdict):
     db.users.insert(pdict)
 
-def addfield(fname, field, data):
+def addfield(uname, field, data):
     #p = users.find_one({"fname":fname})
     #p[field] = data
     #users.save(p)
-    users.update({"fname":fname},{'$set':{field:data}})
+    users.update({"uname":uname},{'$set':{field:data}})
 
+    
+def getAttribute(field, uname):
+    ret = users.find_one({'uname':uname})
+    if ret == None:
+        return None
+    ret = ret[field]
+    #print(ret)
+    return ret
 #setup()
 
 if __name__ == '__main__':
