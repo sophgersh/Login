@@ -1,4 +1,4 @@
-from flask import flash, Flask, g, redirect, render_template, request
+from flask import flash, Flask, g, render_template, session, redirect, url_for, escape, request
 #from flask.ext.pymongo import PyMongo
 
 import mongo
@@ -10,7 +10,14 @@ app.secret_key = 'a'
 def index():
     return render_template('index.html')
 
-@app.route('/home', methods=['POST'])
+@app.route('/home')
+def home():
+    print "here"
+    if 'username' in session:
+        return render_template('home.html',username = escape(session['username']))
+    return render_template('home.html')
+
+@app.route('/user', methods=['POST'])
 def user():
     #print("user!");
     if request.method=="POST":
@@ -22,9 +29,9 @@ def user():
         newuser['pw'] = request.form['pw']
         newuser['rpw'] = request.form['rpw']
         valid_msg = mongo.new_user(newuser)
-        print("hey!");
         if valid_msg == '':
-            return render_template('home.html', d=newuser)
+            session['username'] = request.form['uname']
+            return redirect('/home')
         else:
             flash(valid_msg)
             return redirect('/register')
@@ -33,6 +40,10 @@ def user():
 def login():
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return render_template('login.html')
 @app.route('/register')
 def register():
     return render_template('register.html')

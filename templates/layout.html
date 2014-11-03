@@ -43,7 +43,11 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
 <div class="pure-u-1-5">
   <div class="pure-menu pure-menu-open pure-menu-horizontal">
      <ul>
+       {% if username %}
        <li><a href="/logout">Logout</a></li>
+       {% else %}
+       <li><a href="/login">Login</a></li>
+       {% endif %}
      </ul>
   </div>
 </div>
@@ -54,5 +58,5 @@ href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
 <hr>
 <address></address>
 
-<!-- hhmts start -->Last modified: Sun Nov  2 22:07:45 EST 2014 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sun Nov  2 22:24:17 EST 2014 <!-- hhmts end -->
 </body> </html>
