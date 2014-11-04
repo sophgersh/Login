@@ -8,7 +8,7 @@ app.secret_key = 'a'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/home')
 
 @app.route('/home')
 def home():
@@ -65,6 +65,31 @@ def verify():
             flash(valid_msg)
             return redirect('/login')
 
+@app.route('/personal', methods=['POST'])
+def personal():
+    username = escape(session['username'])
+
+    if request.method=="POST":
+        submit = request.form["submit"]
+        if submit == "name":
+            mongo.addfield(username,"fname",request.form["fname"])
+            mongo.addfield(username,"lname",request.form["lname"])
+
+            fname = mongo.getAttribute("fname", username)
+            lname = mongo.getAttribute("lname", username)
+            return render_template('personal.html',fname = fname, lname = lname ,username = username)
+
+    
+
+    return render_template('personal.html',fname = fname, lname = lname ,username = username)
+
+@app.route('/name')
+def name():
+    username = escape(session['username'])
+    fname = mongo.getAttribute("fname", username)
+    lname = mongo.getAttribute("lname", username)
+    return render_template('personal.html',fname = fname, lname =
+    lname ,username = username, change = "change")
 
 if __name__ == '__main__':
     app.debug = True
