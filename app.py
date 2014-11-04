@@ -15,8 +15,9 @@ def home():
     print "here"
     if 'username' in session:
         username = escape(session['username'])
-        fname = mongo.getAttribute("fname", username)
-        return render_template('home.html',fname = fname ,username = username)
+        fname = mongo.getAttribute(username, "fname")
+        return render_template('home.html', fname = fname, username = username)
+        #return render_template('home.html', mongo.get_user())
     return render_template('home.html')
 
 @app.route('/user', methods=['POST'])

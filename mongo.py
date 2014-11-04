@@ -7,8 +7,8 @@ users = db.users
 
 def new_user(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
-    un = udict['uname'] 
-    uncheck = users.find_one({'uname':un}) == None
+    uname = udict['uname'] 
+    uncheck = users.find_one({'uname':uname}) == None
     s = ""
     if uncheck == False:
         s = "That username has already been used"
@@ -20,7 +20,7 @@ def new_user(udict):
     return s
 
 def check_pword(uname,pw):
-    rpw = getAttribute("pw",uname)
+    rpw = getAttribute(uname,"pw")
     if rpw == None:
         return "Username does not exist"
     if rpw == pw:
@@ -38,22 +38,26 @@ def addfield(uname, field, data):
     users.update({"uname":uname},{'$set':{field:data}})
 
     
-def getAttribute(field, uname):
+def getAttribute(uname, field):
     ret = users.find_one({'uname':uname})
     if ret == None:
         return None
     ret = ret[field]
     #print(ret)
     return ret
-#setup()
+
+def getUser(uname):
+    return users.find_one({'uname':uname})
+    
+    
 
 if __name__ == '__main__':
     #db = conn.test_database
-    dict = {"fname":"Loras","lname":"Tyrell"}
+   # dict = {"fname":"Loras","lname":"Tyrell"}
     #people.insert(dict)
-    addfield("Loras","uname","knightofflowers")
+    #addfield("Loras","uname","knightofflowers")
 
-    #users.remove({"fname":{"$exists":False}})
+    users.remove({"fname":{"$exists":False}})
     
     peeps = users.find({},{'_id':False}) 
     for p in peeps:
