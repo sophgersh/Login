@@ -12,7 +12,7 @@ def index():
 
 @app.route('/home')
 def home():
-    print "here"
+    # print "here"
     if 'username' in session:
         username = escape(session['username'])
         fname = mongo.getAttribute(username, "fname")
@@ -68,6 +68,8 @@ def verify():
 
 @app.route('/personal', methods=['POST'])
 def personal():
+    print("start")
+    
     username = escape(session['username'])
 
     if request.method=="POST":
@@ -75,20 +77,22 @@ def personal():
         if submit == "name":
             mongo.addfield(username,"fname",request.form["fname"])
             mongo.addfield(username,"lname",request.form["lname"])
-
-            fname = mongo.getAttribute("fname", username)
-            lname = mongo.getAttribute("lname", username)
+            
+            fname = mongo.getAttribute(username, "fname")
+            lname = mongo.getAttribute(username, "lname")
             return render_template('personal.html',fname = fname, lname = lname ,username = username)
-
-    
-
-    return render_template('personal.html',fname = fname, lname = lname ,username = username)
+    else:
+        
+        print("got here")
+        fname = mongo.getAttribute(username, "fname")
+        lname = mongo.getAttribute(username, "lname")
+        return render_template('personal.html',fname = fname, lname = lname ,username = username)
 
 @app.route('/name')
 def name():
     username = escape(session['username'])
-    fname = mongo.getAttribute("fname", username)
-    lname = mongo.getAttribute("lname", username)
+    fname = mongo.getAttribute(username, "fname")
+    lname = mongo.getAttribute(username, "lname")
     return render_template('personal.html',fname = fname, lname =
     lname ,username = username, change = "change")
 
