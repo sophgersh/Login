@@ -68,7 +68,7 @@ def verify():
 
 @app.route('/personal', methods=['GET','POST'])
 def personal():
-    print("
+    
     username = escape(session['username'])
 
     if request.method=="POST":
@@ -79,12 +79,36 @@ def personal():
             
             fname = mongo.getAttribute(username, "fname")
             lname = mongo.getAttribute(username, "lname")
-            return render_template('personal.html',fname = fname, lname = lname ,username = username)
+            age = mongo.getAttribute(username, "age")
+            gpa = mongo.getAttribute(username, "gpa")
+            return render_template('personal.html',fname = fname,
+            lname = lname ,username = username, age = age, gpa = gpa,)
+        elif submit == 'age':
+            mongo.addfield(username,"age",request.form["age"])
+            
+            fname = mongo.getAttribute(username, "fname")
+            lname = mongo.getAttribute(username, "lname")
+            age = mongo.getAttribute(username, "age")
+            gpa = mongo.getAttribute(username, "gpa")
+            return render_template('personal.html',fname = fname,
+            lname = lname ,username = username, age = age, gpa = gpa,)
+        elif submit == 'gpa':
+            mongo.addfield(username,"gpa",request.form["gpa"])
+            
+            fname = mongo.getAttribute(username, "fname")
+            lname = mongo.getAttribute(username, "lname")
+            age = mongo.getAttribute(username, "age")
+            gpa = mongo.getAttribute(username, "gpa")
+            return render_template('personal.html',fname = fname,
+            lname = lname ,username = username, age = age, gpa = gpa,)
     else:
         print("got here")
         fname = mongo.getAttribute(username, "fname")
         lname = mongo.getAttribute(username, "lname")
-        return render_template('personal.html',fname = fname, lname = lname ,username = 
+        age = mongo.getAttribute(username, "age")
+        gpa = mongo.getAttribute(username, "gpa")
+        return render_template('personal.html',fname = fname, lname =
+            lname ,username = username, age = age, gpa = gpa,)
 @app.route('/name')
 def name():
     username = escape(session['username'])
@@ -92,6 +116,29 @@ def name():
     lname = mongo.getAttribute(username, "lname")
     return render_template('personal.html',fname = fname, lname =
     lname ,username = username, change = "change")
+
+@app.route('/age')
+def age():
+    username = escape(session['username'])
+
+    fname = mongo.getAttribute(username, "fname")
+    lname = mongo.getAttribute(username, "lname")
+    age = mongo.getAttribute(username, "age")
+    gpa = mongo.getAttribute(username, "gpa")
+    return render_template('personal.html',fname = fname, lname =
+    lname ,username = username, age = age, gpa = gpa, changeage =
+    "change")
+
+@app.route('/gpa')
+def gpa():
+    username = escape(session['username'])
+
+    fname = mongo.getAttribute(username, "fname")
+    lname = mongo.getAttribute(username, "lname")
+    age = mongo.getAttribute(username, "age")
+    gpa = mongo.getAttribute(username, "gpa")
+    return render_template('personal.html',fname = fname, lname =
+    lname ,username = username, age = age, gpa = gpa, changegpa = "change")
 
 if __name__ == '__main__':
     app.debug = True

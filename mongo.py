@@ -42,7 +42,7 @@ def getAttribute(uname, field):
     ret = users.find_one({'uname':uname})
     if ret == None:
         return None
-    ret = ret[field]
+    ret = ret.get(field)
     #print(ret)
     return ret
 
