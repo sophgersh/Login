@@ -66,15 +66,14 @@ def verify():
             flash(valid_msg)
             return redirect('/login')
 
-@app.route('/personal', methods=['POST'])
+@app.route('/personal', methods=['GET','POST'])
 def personal():
-    print("start")
-    
+    print("
     username = escape(session['username'])
 
     if request.method=="POST":
-        submit = request.form["submit"]
-        if submit == "name":
+        submit = request.form['submit']
+        if submit == 'name':
             mongo.addfield(username,"fname",request.form["fname"])
             mongo.addfield(username,"lname",request.form["lname"])
             
@@ -82,12 +81,10 @@ def personal():
             lname = mongo.getAttribute(username, "lname")
             return render_template('personal.html',fname = fname, lname = lname ,username = username)
     else:
-        
         print("got here")
         fname = mongo.getAttribute(username, "fname")
         lname = mongo.getAttribute(username, "lname")
-        return render_template('personal.html',fname = fname, lname = lname ,username = username)
-
+        return render_template('personal.html',fname = fname, lname = lname ,username = 
 @app.route('/name')
 def name():
     username = escape(session['username'])
