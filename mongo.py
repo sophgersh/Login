@@ -1,9 +1,11 @@
-import pymongo
+import pymongo, csv
 from pymongo import Connection
+
 
 conn = Connection()
 db = conn["uncommon"]
 users = db.users
+colleges = db.colleges
 
 def new_user(udict):
     pwcheck = (udict['pw'] == udict['rpw'])
@@ -49,17 +51,25 @@ def getAttribute(uname, field):
 def getUser(uname):
     return users.find_one({'uname':uname})
     
-    
+def getColleges():
+    cols = csv.DictReader(open("colleges.csv"))
+    for c in cols:
+        colleges.insert(c)
+
+        
 
 if __name__ == '__main__':
-    #db = conn.test_database
-   # dict = {"fname":"Loras","lname":"Tyrell"}
-    #people.insert(dict)
-    #addfield("Loras","uname","knightofflowers")
 
-    users.remove({"fname":{"$exists":False}})
+    getColleges()
+    #users.remove({"fname":{"$exists":False}})
+
+    
     
     peeps = users.find({},{'_id':False}) 
+    for p in peeps:
+        print p
+
+    peeps = colleges.find({},{'_id':False}) 
     for p in peeps:
         print p
 
