@@ -14,6 +14,8 @@ def new_user(udict):
     s = ""
     if uncheck == False:
         s = "That username has already been used"
+    elif len(pw) >= 5 and len(pw) <= 20:
+        s= "Password must be between 5 and 20 characters"
     elif pwcheck == False:
         s =  "Passwords do not match"
     else:

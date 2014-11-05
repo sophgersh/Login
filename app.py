@@ -95,13 +95,21 @@ def gpa():
 @app.route('/colleges', methods=['GET','POST'])
 def colleges():
     username = escape(session['username'])
+    if request.method=="POST":
+        colleges = request.form["size"]
+        #method to add this list (if it is a list) to the users colleges
     return render_template('colleges.html', udict = mongo.getUser(username))
 
 @app.route('/addcolleges', methods=['POST','GET'])
 def addcolleges():
-    pass
-
-
+    if request.method=="POST":
+        username = escape(session['username'])
+        size = request.form["size"]
+        kind = request.form["type"]
+        location = request.form["location"]
+        gpa = request.form["gpa"]
+        collegematch = []#some method that gets all colleges with above criteria but none that are already selected
+        return render_template('collegematches.html',collegematch = collegematch,udict = mongo.getUser(username))
 if __name__ == '__main__':
     app.debug = True
     app.run()
