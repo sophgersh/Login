@@ -9,9 +9,10 @@ Sorry, no colleges matched your search
 <form action="/colleges" method="post" class="pure-form pure-form-aligned">
 <fieldset>
 {% for college in collegematch %}
-<input type="checkbox" name="college" value={{college['name']}}><b>{{college['name']}}</b><br>
+<input type="checkbox" name="college" value={{college['name']}}><b> {{college['name']}}</b><br>
 <div style="margin-left:30px;"> {{college['description']}} </div>
 {% endfor %}
+<br>
 <button type="submit" name="submit" value="gpa" class="pure-button">submit</button>
 </fieldset>
 {% endif %}
