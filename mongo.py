@@ -41,7 +41,7 @@ def addfield(uname, field, data):
 
     
 def getAttribute(uname, field):
-    ret = users.find_one({'uname':uname})
+    ret = users.find_one({'uname':uname},{field:{"$exists":True}})
     if ret == None:
         return None
     ret = ret.get(field)
@@ -51,17 +51,20 @@ def getAttribute(uname, field):
 def getUser(uname):
     return users.find_one({'uname':uname})
     
-def getColleges():
+def createColleges():
     cols = csv.DictReader(open("colleges.csv"))
     for c in cols:
         colleges.insert(c)
 
+def collegeLookup(dict):
+    cols = colleges.find(dict)
+    
         
 
 if __name__ == '__main__':
 
-    getColleges()
-    #users.remove({"fname":{"$exists":False}})
+    createColleges()
+    
 
     
     
@@ -89,7 +92,8 @@ if __name__ == '__main__':
      for person in people.find():
         people.remove(person)
 
- people.find(dict) --> returns a list of people with the dict qualities 
+ people.find(dict) --> returns a list of people with the dict qualities
+ users.remove({"fname":{"$exists":False}})
 """
 
     
