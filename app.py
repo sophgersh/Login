@@ -69,7 +69,6 @@ def verify():
 @app.route('/personal', methods=['GET','POST'])
 def personal():    
     username = escape(session['username'])
-
     if request.method=="POST":
         submit = request.form['submit']
         if submit == 'name':
