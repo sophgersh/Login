@@ -12,13 +12,11 @@ def index():
 
 @app.route('/home')
 def home():
-    # print "here"
+    udict = {'uname':False}
     if 'username' in session:
         username = escape(session['username'])
-        fname = mongo.getAttribute(username, "fname")
-        return render_template('home.html', fname = fname, username = username)
-        #return render_template('home.html', mongo.get_user())
-    return render_template('home.html')
+        udict = mongo.getUser(username)
+    return render_template('home.html', udict = udict)
 
 @app.route('/user', methods=['POST'])
 def user():
@@ -40,18 +38,20 @@ def user():
             return redirect('/register')
 
 @app.route('/login')
-def login():
-    
-    return render_template('login.html')
+def login():    
+    return render_template('login.html', udict={'uname':False})
+
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return render_template('login.html')
+    return render_template('login.html', udict={'uname':False})
+
+
 @app.route('/register')
-def register():
-    
-    return render_template('register.html')
+def register():   
+    return render_template('register.html', udict={'uname':False})
+
 
 @app.route('/verify', methods=['POST'])
 def verify():
@@ -90,13 +90,16 @@ def age():
 @app.route('/gpa')
 def gpa():
     username = escape(session['username'])
-
     return render_template('personal.html', udict = mongo.getUser(username),changegpa = "change" )
 
-@app.route('/colleges')
+@app.route('/colleges', methods=['GET','POST'])
 def colleges():
-    pass
+    username = escape(session['username'])
+    return render_template('colleges.html', udict = mongo.getUser(username))
 
+@app.route('/addcolleges', methods=['POST','GET'])
+def addcolleges():
+    pass
 
 
 if __name__ == '__main__':

@@ -2,20 +2,23 @@
 
 
 {% block body %}
-<h1> Welcome to your College page {{fname}}! </h1>
-
-<b>Currently Selected Colleges</b>
- {% if collegenamelist %}
-   {% for college in collegenamelist %}
+<h1> Welcome to your College page {{udict['fname']}}! </h1>
+<fieldset>
+<font size="4"><b>Currently Selected Colleges</font></b><br><br>
+ {% if udict['colleges'] %}
+   {% for college in udict['colleges'] %}
        {{college}}<br>
    {% endfor %}
  {% else %}
-      You have added no colleges
+      <div style="margin-left:30px;"> You have added no colleges</div> 
 {% endif %}
+</fieldset>
 <br>
 <br>
-<b>Add a new college </b>
-<font size="2">All selections optional</font>
+<fieldset>
+<font size="4"><b>Search Colleges </font></b>
+<font size="2">All selections optional</font><br><br>
+ <div style="margin-left:30px;">
 <form action="/addcolleges" method="post" class="pure-form pure-form-aligned">
 <fieldset>
 <label for="location">Location</label>
@@ -26,11 +29,14 @@
 <input type="radio" name="size" value="small">Small<br>
 <input type="radio" name="size" value="medium">Medium<br>
 <input type="radio" name="size" value="large">Large<br>
+<br>
 <b>Type</b><br>
 <input type="radio" name="size" value="private">Private<br>
 <input type="radio" name="size" value="state">State<br>
+</div>
 </fieldset>
-
+</fieldset>
+<br>
 
 
 {% endblock %}
