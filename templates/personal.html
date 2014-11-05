@@ -6,7 +6,7 @@
 <br><br>
 <form action="/personal" method="post" class="pure-form pure-form-aligned">
 <fieldset>
-Name: {{fname}} {{lname}} <br>
+Name: {{udict['fname']}} {{udict['lname']}} <br>
 {% if change %}
 <label for="fname">First Name</label>
   <input id="fname" name="fname" type="text"
@@ -20,8 +20,8 @@ Name: {{fname}} {{lname}} <br>
      {% endif %}
 <br><br>
 Age:
-{% if age %}
-{{age}}
+{% if udict['age'] %}
+{{udict['age']}}
 {% else %}
 NA
 {% endif %}<br>
@@ -35,8 +35,8 @@ NA
 {% endif %}
 <br><br>
 GPA:
-{% if gpa %}
-{{gpa}}
+{% if udict['gpa'] %}
+{{udict['gpa']}}
 {% else %}
 NA
 {% endif %}<br>

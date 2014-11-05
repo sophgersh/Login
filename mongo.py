@@ -41,7 +41,7 @@ def addfield(uname, field, data):
 
     
 def getAttribute(uname, field):
-    ret = users.find_one({'uname':uname},{field:{"$exists":True}})
+    ret = users.find_one({'uname':uname, field:{'$exists':True}})
     if ret == None:
         return None
     ret = ret.get(field)
@@ -63,19 +63,18 @@ def collegeLookup(dict):
 
 if __name__ == '__main__':
 
-    createColleges()
-    
-
-    
-    
+    #colleges.remove()
+    #createColleges()
+    '''  
     peeps = users.find({},{'_id':False}) 
     for p in peeps:
         print p
-
+    print 
     peeps = colleges.find({},{'_id':False}) 
     for p in peeps:
         print p
-
+    '''
+    print getUser('sophgersh')
         
 """
  people = db.people

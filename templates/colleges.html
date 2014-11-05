@@ -5,12 +5,12 @@
 <h1> Welcome to your College page {{fname}}! </h1>
 
 <b>Currently Selected Colleges</b>
-{% if collegenamelist %}
-	{% for college in collegenamelist %}
-		{{college}}<br>
-		    {% endfor %}
-	{% else %}
-You have added no colleges
+ {% if collegenamelist %}
+   {% for college in collegenamelist %}
+       {{college}}<br>
+   {% endfor %}
+ {% else %}
+      You have added no colleges
 {% endif %}
 <br>
 <br>
