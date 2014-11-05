@@ -96,7 +96,7 @@ def gpa():
 def colleges():
     username = escape(session['username'])
     if request.method=="POST":
-        colleges = request.form["college"]
+        colleges = request.form.getlist("college")
         mongo.addfield(username, 'colleges', colleges)
         #method to add this list (if it is a list) to the users colleges
     return render_template('colleges.html', udict = mongo.getUser(username))
@@ -108,10 +108,14 @@ def addcolleges():
         d = {}
         #college name,location,min gpa,size,type,description
         username = escape(session['username'])
-        d['size'] = request.form["size"]
-        d['type'] = request.form["type"]
-        d['location'] = request.form["location"]
-        d['min gpa'] = request.form["gpa"]
+        if request.form.get("size",None) != None:
+            d['size'] = request.form["size"]
+        if request.form.get("type",None) != None:
+            d['type'] = request.form["type"]
+        if request.form.get("location",None) != None:
+            d['location'] = request.form["location"]
+        if request.form.get("gpa",None) != None:
+            d['min gpa'] = request.form["gpa"]
         
         collegematch = mongo.collegeLookup(username, d)
         return render_template('collegematches.html',collegematch = collegematch,udict = mongo.getUser(username))
