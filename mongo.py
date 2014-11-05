@@ -14,7 +14,7 @@ def new_user(udict):
     s = ""
     if uncheck == False:
         s = "That username has already been used"
-    elif len(pw) >= 5 and len(pw) <= 20:
+    elif not (len(udict['pw']) >= 5 and len(udict['pw']) <= 20):
         s= "Password must be between 5 and 20 characters"
     elif pwcheck == False:
         s =  "Passwords do not match"
@@ -33,7 +33,9 @@ def check_pword(uname,pw):
         return "Wrong password"
 
 def addperson(pdict):
-    db.users.insert(pdict)
+    pdict['colleges'] = []
+    users.insert(pdict)
+    
 
 def addfield(uname, field, data):
     #p = users.find_one({"fname":fname})
@@ -58,25 +60,40 @@ def createColleges():
     for c in cols:
         colleges.insert(c)
 
-def collegeLookup(dict):
-    cols = colleges.find(dict)
-    
+def collegeLookup(uname, d):
+    ucols = getAttribute(uname, 'colleges')
+    colnames = []
+    for c in colleges.find(d):
+        if c not in ucols:    
+            colnames.append(c['name'])
+    return colnames
         
 
 if __name__ == '__main__':
 
-    #colleges.remove()
-    #createColleges()
-    '''  
+    colleges.remove()
+    users.remove() #----AFTER YOU RUN THIS COMMENT THIS OUT-----#
+    createColleges()
+    """
     peeps = users.find({},{'_id':False}) 
     for p in peeps:
         print p
-    print 
+    print    
     peeps = colleges.find({},{'_id':False}) 
     for p in peeps:
         print p
-    '''
-    print getUser('sophgersh')
+    
+    d = {}
+    d['size'] = 'medium'
+    d['type'] = 'private'
+    d['location'] = 'Boston'
+    d['min gpa'] = '100'
+    cols = collegeLookup(d)
+    
+    for c in cols:
+        print c
+    """
+    
         
 """
  people = db.people
