@@ -43,6 +43,11 @@ def addfield(uname, field, data):
     #users.save(p)
     users.update({"uname":uname},{'$set':{field:data}})
 
+def addColleges(uname, cols):
+    p = users.find_one({'uname':uname})
+    for c in cols:
+        p['colleges'].append(c)
+    users.save(p)
     
 def getAttribute(uname, field):
     ret = users.find_one({'uname':uname, field:{'$exists':True}})
@@ -64,25 +69,26 @@ def collegeLookup(uname, d):
     ucols = getAttribute(uname, 'colleges')
     colnames = []
     for c in colleges.find(d):
-        if c not in ucols:    
-            colnames.append(c['name'])
+        if c['name'] not in ucols:  
+            colnames.append(colleges.find_one({'name':c['name']}))
     return colnames
         
 
 if __name__ == '__main__':
 
     colleges.remove()
-    users.remove() #----AFTER YOU RUN THIS COMMENT THIS OUT-----#
+    #users.remove() #----AFTER YOU RUN THIS COMMENT THIS OUT-----#
     createColleges()
-    """
+    collegeLookup('s',{})
     peeps = users.find({},{'_id':False}) 
     for p in peeps:
         print p
+    
     print    
     peeps = colleges.find({},{'_id':False}) 
     for p in peeps:
         print p
-    
+    """
     d = {}
     d['size'] = 'medium'
     d['type'] = 'private'
